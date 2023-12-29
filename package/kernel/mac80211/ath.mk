@@ -330,17 +330,15 @@ define KernelPackage/ath11k/config
 
        config ATH11K_NSS_SUPPORT
                bool "Enable NSS WiFi offload"
+               depends on PACKAGE_kmod-ath11k
                default y if TARGET_qualcommax
 
-       if PACKAGE_kmod-ath11k
-
-         config ATH11K_MEM_PROFILE_512M
+       config ATH11K_MEM_PROFILE_512M
                bool "Use limits for the 512MB memory size"
-               default n
+               depends on PACKAGE_kmod-ath11k
+               default y if TARGET_qualcommax
                help
-                  For IPQ devices with 512MB RAM (i.e. Xiaomi AX3600).
-                  Unselected is 1GB.
-       endif
+                  This allows selecting the ath11k memory size profile to be used.
 endef
 
 define KernelPackage/ath11k-ahb
